@@ -7,13 +7,13 @@ defmodule ArtMapsWeb.MuralSidebarLive do
   def update(%{mural: mural}, socket) do
     artist = Murals.get_artist_for_mural(mural)
     murals_by_artist = Murals.list_murals_by_artist(artist.id)
+
     {:ok,
-      socket
-      |> assign(:mural, mural)
-      |> assign(:artist, artist)
-      |> assign(:murals_by_artist, murals_by_artist)
-      |> assign(:tab, :mural)
-    }
+     socket
+     |> assign(:mural, mural)
+     |> assign(:artist, artist)
+     |> assign(:murals_by_artist, murals_by_artist)
+     |> assign(:tab, :mural)}
   end
 
   @impl true

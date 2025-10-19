@@ -6,5 +6,5 @@ defmodule ArtMapsWeb.PageHTML do
   """
   use ArtMapsWeb, :html
 
-  embed_templates "page_html/*"
+  embed_templates("page_html/*")
 end

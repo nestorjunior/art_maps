@@ -34,7 +34,7 @@
                              phoenix_html,phoenix_live_reload,
                              phoenix_live_view,phoenix_live_dashboard,swoosh,
                              req,telemetry_metrics,telemetry_poller,gettext,
-                             jason,dns_cluster,bandit]},
+                             jason,dns_cluster,bandit,torch]},
               {description,"art_maps"},
               {registered,[]},
               {vsn,"0.1.0"},

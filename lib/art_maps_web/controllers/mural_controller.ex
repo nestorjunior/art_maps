@@ -4,19 +4,35 @@ defmodule ArtMapsWeb.MuralController do
   alias ArtMaps.Murals
   alias ArtMaps.Murals.Mural
 
-  action_fallback ArtMapsWeb.FallbackController
+  plug(:put_root_layout, {ArtMapsWeb.Layouts, "torch.html"})
+  plug(:put_layout, false)
 
-  def index(conn, _params) do
-    murals = Murals.list_murals()
-    render(conn, :index, murals: murals)
+  def index(conn, params) do
+    case Murals.paginate_murals(params) do
+      {:ok, assigns} ->
+        render(conn, :index, assigns)
+
+      {:error, error} ->
+        conn
+        |> put_flash(:error, "There was an error rendering Murals. #{inspect(error)}")
+        |> redirect(to: ~p"/murals")
+    end
+  end
+
+  def new(conn, _params) do
+    changeset = Murals.change_mural(%Mural{})
+    render(conn, :new, changeset: changeset)
   end
 
   def create(conn, %{"mural" => mural_params}) do
-    with {:ok, %Mural{} = mural} <- Murals.create_mural(mural_params) do
-      conn
-      |> put_status(:created)
-      |> put_resp_header("location", ~p"/api/murals/#{mural}")
-      |> render(:show, mural: mural)
+    case Murals.create_mural(mural_params) do
+      {:ok, mural} ->
+        conn
+        |> put_flash(:info, "Mural created successfully.")
+        |> redirect(to: ~p"/murals/#{mural}")
+
+      {:error, %Ecto.Changeset{} = changeset} ->
+        render(conn, :new, changeset: changeset)
     end
   end
 
@@ -25,19 +41,32 @@ defmodule ArtMapsWeb.MuralController do
     render(conn, :show, mural: mural)
   end
 
+  def edit(conn, %{"id" => id}) do
+    mural = Murals.get_mural!(id)
+    changeset = Murals.change_mural(mural)
+    render(conn, :edit, mural: mural, changeset: changeset)
+  end
+
   def update(conn, %{"id" => id, "mural" => mural_params}) do
     mural = Murals.get_mural!(id)
 
-    with {:ok, %Mural{} = mural} <- Murals.update_mural(mural, mural_params) do
-      render(conn, :show, mural: mural)
+    case Murals.update_mural(mural, mural_params) do
+      {:ok, mural} ->
+        conn
+        |> put_flash(:info, "Mural updated successfully.")
+        |> redirect(to: ~p"/murals/#{mural}")
+
+      {:error, %Ecto.Changeset{} = changeset} ->
+        render(conn, :edit, mural: mural, changeset: changeset)
     end
   end
 
   def delete(conn, %{"id" => id}) do
     mural = Murals.get_mural!(id)
+    {:ok, _mural} = Murals.delete_mural(mural)
 
-    with {:ok, %Mural{}} <- Murals.delete_mural(mural) do
-      send_resp(conn, :no_content, "")
-    end
+    conn
+    |> put_flash(:info, "Mural deleted successfully.")
+    |> redirect(to: ~p"/murals")
   end
 end

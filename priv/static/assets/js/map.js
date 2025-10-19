@@ -1,7 +1,8 @@
 import L from 'leaflet';
-
 export const Map = {
   mounted() {
+    // Centro inicial (São Paulo)
+    const center = { lat: -23.5505, lng: -46.6333 };
     this.map = L.map(this.el).setView([-23.5505, -46.6333], 12); // São Paulo como exemplo
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '© OpenStreetMap contributors'
@@ -56,3 +57,4 @@ export const Map = {
     // Optionally handle updates for new murals
   }
 };
+

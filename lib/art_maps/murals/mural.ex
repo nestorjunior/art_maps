@@ -3,11 +3,11 @@ defmodule ArtMaps.Murals.Mural do
   import Ecto.Changeset
 
   schema "murals" do
-    field :title, :string
-    field :description, :string
-    field :latitude, :float
-    field :longitude, :float
-    field :image_url, :string
+    field(:title, :string)
+    field(:description, :string)
+    field(:latitude, :float)
+    field(:longitude, :float)
+    field(:image_url, :string)
 
     timestamps(type: :utc_datetime)
   end

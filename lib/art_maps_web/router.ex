@@ -2,29 +2,30 @@ defmodule ArtMapsWeb.Router do
   use ArtMapsWeb, :router
 
   pipeline :browser do
-    plug :accepts, ["html"]
-    plug :fetch_session
-    plug :fetch_live_flash
-    plug :put_root_layout, html: {ArtMapsWeb.Layouts, :root}
-    plug :protect_from_forgery
-    plug :put_secure_browser_headers
+    plug(:accepts, ["html"])
+    plug(:fetch_session)
+    plug(:fetch_live_flash)
+    plug(:put_root_layout, html: {ArtMapsWeb.Layouts, :root})
+    plug(:protect_from_forgery)
+    plug(:put_secure_browser_headers)
   end
 
   pipeline :api do
-    plug :accepts, ["json"]
+    plug(:accepts, ["json"])
   end
 
   scope "/", ArtMapsWeb do
-    pipe_through :browser
+    pipe_through(:browser)
 
-    live "/", MapLive, :index
-    live "/map", MapLive, :index
+    live("/", MapLive, :index)
+    live("/map", MapLive, :index)
+    resources("/admin/murals", ArtMapsWeb.MuralController)
   end
 
   # Other scopes may use custom stacks.
   scope "/api", ArtMapsWeb do
-    pipe_through :api
-    resources "/murals", MuralController, except: [:new, :edit]
+    pipe_through(:api)
+    resources("/murals", MuralController, except: [:new, :edit])
   end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development
@@ -37,10 +38,10 @@ defmodule ArtMapsWeb.Router do
     import Phoenix.LiveDashboard.Router
 
     scope "/dev" do
-      pipe_through :browser
+      pipe_through(:browser)
 
-      live_dashboard "/dashboard", metrics: ArtMapsWeb.Telemetry
-      forward "/mailbox", Plug.Swoosh.MailboxPreview
+      live_dashboard("/dashboard", metrics: ArtMapsWeb.Telemetry)
+      forward("/mailbox", Plug.Swoosh.MailboxPreview)
     end
   end
 end

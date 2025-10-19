@@ -7,13 +7,13 @@ defmodule ArtMapsWeb.MapLive do
   @impl true
   def mount(_params, _session, socket) do
     murals = Murals.list_murals()
+
     {:ok,
-      socket
-      |> assign(:murals, murals)
-      |> assign(:page_title, "Mapa de Murais Urbanos")
-      |> assign(:search_query, "")
-      |> assign(:suggestions, [])
-    }
+     socket
+     |> assign(:murals, murals)
+     |> assign(:page_title, "Mapa de Murais Urbanos")
+     |> assign(:search_query, "")
+     |> assign(:suggestions, [])}
   end
 
   @impl true
@@ -80,9 +80,10 @@ defmodule ArtMapsWeb.MapLive do
       socket.assigns.murals
       |> Enum.filter(fn mural ->
         String.contains?(String.downcase(mural.title), String.downcase(query)) or
-        String.contains?(String.downcase(mural.description), String.downcase(query))
+          String.contains?(String.downcase(mural.description), String.downcase(query))
       end)
       |> Enum.map(&%{id: &1.id, label: &1.title})
+
     {:noreply, assign(socket, search_query: query, suggestions: suggestions)}
   end
 
