@@ -17,7 +17,7 @@ defmodule ArtMapsWeb.Router do
   scope "/", ArtMapsWeb do
     pipe_through :browser
 
-    get "/", PageController, :home
+    live "/", MapLive, :index
     live "/map", MapLive, :index
   end
 
