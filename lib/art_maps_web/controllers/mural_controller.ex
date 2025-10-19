@@ -15,7 +15,7 @@ defmodule ArtMapsWeb.MuralController do
       {:error, error} ->
         conn
         |> put_flash(:error, "There was an error rendering Murals. #{inspect(error)}")
-        |> redirect(to: ~p"/murals")
+        |> redirect(to: ~p"/admin/murals")
     end
   end
 
@@ -29,7 +29,7 @@ defmodule ArtMapsWeb.MuralController do
       {:ok, mural} ->
         conn
         |> put_flash(:info, "Mural created successfully.")
-        |> redirect(to: ~p"/murals/#{mural}")
+        |> redirect(to: ~p"/admin/murals/#{mural}")
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, :new, changeset: changeset)
@@ -54,7 +54,7 @@ defmodule ArtMapsWeb.MuralController do
       {:ok, mural} ->
         conn
         |> put_flash(:info, "Mural updated successfully.")
-        |> redirect(to: ~p"/murals/#{mural}")
+        |> redirect(to: ~p"/admin/murals/#{mural}")
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, :edit, mural: mural, changeset: changeset)
@@ -67,6 +67,6 @@ defmodule ArtMapsWeb.MuralController do
 
     conn
     |> put_flash(:info, "Mural deleted successfully.")
-    |> redirect(to: ~p"/murals")
+    |> redirect(to: ~p"/admin/murals")
   end
 end

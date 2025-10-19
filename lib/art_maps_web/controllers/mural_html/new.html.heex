@@ -1,6 +1,6 @@
 <section id="torch-toolbar">
   <div class="torch-container">
-    <.link href={~p"/murals"} class="torch-button"><%= Torch.I18n.message("Cancel") %></.link>
+    <.link href={~p"/admin/murals"} class="torch-button"><%= Torch.I18n.message("Cancel") %></.link>
   </div>
 </section>
 
@@ -9,6 +9,6 @@
     <div class="header">
       <h3>New Mural</h3>
     </div>
-    <.mural_form changeset={@changeset} action={~p"/murals"} />
+    <.mural_form changeset={@changeset} action={~p"/admin/murals"} />
   </div>
 </section>

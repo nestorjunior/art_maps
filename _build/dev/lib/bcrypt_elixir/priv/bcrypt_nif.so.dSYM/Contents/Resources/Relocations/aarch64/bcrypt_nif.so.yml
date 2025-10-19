@@ -1,0 +1,5 @@
+---
+triple:          'arm64-apple-darwin'
+binary-path:     '/Users/nestorpereiradasilvajunior/Documents/Estudos/art_maps/_build/dev/lib/bcrypt_elixir/priv/bcrypt_nif.so'
+relocations:     []
+...

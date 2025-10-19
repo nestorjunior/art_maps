@@ -7,6 +7,19 @@
 # General application configuration
 import Config
 
+config :art_maps, :scopes,
+  user: [
+    default: true,
+    module: ArtMaps.Accounts.Scope,
+    assign_key: :current_scope,
+    access_path: [:user, :id],
+    schema_key: :user_id,
+    schema_type: :id,
+    schema_table: :users,
+    test_data_fixture: ArtMaps.AccountsFixtures,
+    test_setup_helper: :register_and_log_in_user
+  ]
+
 config :art_maps,
   ecto_repos: [ArtMaps.Repo],
   generators: [timestamp_type: :utc_datetime]
@@ -38,6 +51,28 @@ config :logger, :default_formatter,
 
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
+
+# Configure esbuild (the version is required)
+config :esbuild,
+  version: "0.17.11",
+  art_maps: [
+    args:
+      ~w(js/app.js --bundle --target=es2017 --outdir=../priv/static/assets/js --external:/fonts/* --external:/images/*),
+    cd: Path.expand("../assets", __DIR__),
+    env: %{"NODE_PATH" => Path.expand("../deps", __DIR__)}
+  ]
+
+# Configure tailwind (the version is required)
+config :tailwind,
+  version: "3.4.3",
+  art_maps: [
+    args: ~w(
+      --config=tailwind.config.js
+      --input=css/app.css
+      --output=../priv/static/assets/css/app.css
+    ),
+    cd: Path.expand("../assets", __DIR__)
+  ]
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

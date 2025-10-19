@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="csrf-token" content={get_csrf_token()} />
+    <title>Admin - ArtMaps</title>
+    <link phx-track-static rel="stylesheet" href={~p"/assets/css/app.css"} />
+    <link phx-track-static rel="stylesheet" href={~p"/assets/default.css"} />
+    <link rel="stylesheet" href="https://unpkg.com/torch@5.0.0/priv/static/css/torch.css" />
+    <script defer phx-track-static type="text/javascript" src={~p"/assets/js/app.js"}></script>
+  </head>
+  <body class="torch-admin">
+    <header class="torch-header">
+      <div class="torch-container">
+        <div class="torch-logo">
+          <a href="/admin/murals">
+            <h3>ArtMaps Admin</h3>
+          </a>
+        </div>
+        <nav class="torch-nav">
+          <a href="/">← Voltar ao Mapa</a>
+        </nav>
+      </div>
+    </header>
+
+    <div class="torch-container">
+      <%= if Phoenix.Flash.get(@flash, :info) do %>
+        <p class="alert alert-info" role="alert">
+          <%= Phoenix.Flash.get(@flash, :info) %>
+        </p>
+      <% end %>
+
+      <%= if Phoenix.Flash.get(@flash, :error) do %>
+        <p class="alert alert-danger" role="alert">
+          <%= Phoenix.Flash.get(@flash, :error) %>
+        </p>
+      <% end %>
+
+      <%= @inner_content %>
+    </div>
+  </body>
+</html>

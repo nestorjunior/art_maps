@@ -1,6 +1,6 @@
 <section id="torch-toolbar">
   <div class="torch-container">
-    <.link href={~p"/murals/new"} class="torch-button">New Mural</.link>
+    <.link href={~p"/admin/murals/new"} class="torch-button">New Mural</.link>
   </div>
 </section>
 <section id="torch-index-content">
@@ -32,7 +32,7 @@
         
         
         <button type="submit" class="torch-button">Search</button>
-        <%= link "Clear Filters", to: ~p"/murals" %>
+        <%= link "Clear Filters", to: ~p"/admin/murals" %>
       <% end %>
 
     </section>
@@ -71,9 +71,9 @@
                 <td><%= mural.image_url %></td>
               
               <td class="torch-actions">
-                <span><.link href={~p"/murals/#{mural}"}><%= Torch.I18n.message("Show") %></.link></span>
-                <span><.link href={~p"/murals/#{mural}/edit"}><%= Torch.I18n.message("Edit") %></.link></span>
-                <span><.link href={~p"/murals/#{mural}"} method="delete" data-confirm={Torch.I18n.message("Are you sure?")}><%= Torch.I18n.message("Delete") %></.link></span>
+                <span><.link href={~p"/admin/murals/#{mural}"}><%= Torch.I18n.message("Show") %></.link></span>
+                <span><.link href={~p"/admin/murals/#{mural}/edit"}><%= Torch.I18n.message("Edit") %></.link></span>
+                <span><.link href={~p"/admin/murals/#{mural}"} method="delete" data-confirm={Torch.I18n.message("Are you sure?")}><%= Torch.I18n.message("Delete") %></.link></span>
               </td>
             </tr>
           <% end %>

@@ -7,22 +7,46 @@ defmodule ArtMaps.Murals do
   alias ArtMaps.Repo
 
   alias ArtMaps.Murals.Mural
+  alias ArtMaps.Murals.Artist
 
-  # Stub para artista, pois não há schema definido
-  def get_artist_for_mural(_mural) do
-    %{
-      id: 1,
-      name: "Artista Exemplo",
-      photo_url: "https://placehold.co/96x96",
-      bio: "Mini biografia do artista.",
-      website: "https://example.com",
-      instagram: "https://instagram.com/exemplo",
-      contact: "mailto:contato@example.com"
-    }
+  # Artist functions
+  def list_artists do
+    Repo.all(Artist)
   end
 
-  def list_murals_by_artist(_artist_id) do
-    list_murals()
+  def get_artist!(id), do: Repo.get!(Artist, id)
+
+  def get_artist_for_mural(mural) do
+    if mural.artist_id do
+      Repo.preload(mural, :artist).artist
+    else
+      nil
+    end
+  end
+
+  def list_murals_by_artist(artist_id) do
+    from(m in Mural, where: m.artist_id == ^artist_id, order_by: [desc: m.inserted_at])
+    |> Repo.all()
+  end
+
+  def create_artist(attrs \\ %{}) do
+    %Artist{}
+    |> Artist.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  def update_artist(%Artist{} = artist, attrs) do
+    artist
+    |> Artist.changeset(attrs)
+    |> Repo.update()
+  end
+
+  def delete_artist(%Artist{} = artist) do
+    Repo.delete(artist)
+  end
+
+  def change_artist(%Artist{} = artist, attrs \\ %{}) do
+    Artist.changeset(artist, attrs)
   end
 
   # ...existing code...

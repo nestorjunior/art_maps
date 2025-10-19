@@ -24,7 +24,10 @@ config :art_maps, ArtMapsWeb.Endpoint,
   code_reloader: true,
   debug_errors: true,
   secret_key_base: "79jgGL5b9Aa7nsYNo0fJKZDPB7dF/jz9ma79wgiuGlQS96fk7rw3Qf373I0DSeOu",
-  watchers: []
+  watchers: [
+    esbuild: {Esbuild, :install_and_run, [:art_maps, ~w(--sourcemap=inline --watch)]},
+    tailwind: {Tailwind, :install_and_run, [:art_maps, ~w(--watch)]}
+  ]
 
 # ## SSL Support
 #
