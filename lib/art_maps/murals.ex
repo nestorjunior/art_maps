@@ -8,6 +8,23 @@ defmodule ArtMaps.Murals do
 
   alias ArtMaps.Murals.Mural
 
+  # Stub para artista, pois não há schema definido
+  def get_artist_for_mural(_mural) do
+    %{
+      id: 1,
+      name: "Artista Exemplo",
+      photo_url: "https://placehold.co/96x96",
+      bio: "Mini biografia do artista.",
+      website: "https://example.com",
+      instagram: "https://instagram.com/exemplo",
+      contact: "mailto:contato@example.com"
+    }
+  end
+
+  def list_murals_by_artist(_artist_id) do
+    list_murals()
+  end
+
   @doc """
   Returns the list of murals.
 

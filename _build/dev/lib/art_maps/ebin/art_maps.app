@@ -13,6 +13,7 @@
                         'Elixir.ArtMapsWeb.MapLive',
                         'Elixir.ArtMapsWeb.MuralController',
                         'Elixir.ArtMapsWeb.MuralJSON',
+                        'Elixir.ArtMapsWeb.MuralSidebarLive',
                         'Elixir.ArtMapsWeb.PageController',
                         'Elixir.ArtMapsWeb.PageHTML',
                         'Elixir.ArtMapsWeb.Router',
