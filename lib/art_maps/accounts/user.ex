@@ -18,6 +18,27 @@ defmodule ArtMaps.Accounts.User do
   end
 
   @doc """
+  A user changeset for registration.
+
+  It combines email and password validation.
+
+  ## Options
+
+    * `:hash_password` - Hashes the password so it can be stored securely
+      in the database and ensures the password field is cleared to prevent
+      leaks in the logs. Defaults to `true`.
+    * `:validate_email` - Validates the uniqueness of the email, in addition
+      to the basic validations. Defaults to `true`.
+  """
+  def registration_changeset(user, attrs, opts \\ []) do
+    user
+    |> cast(attrs, [:email, :password])
+    |> validate_email(opts)
+    |> validate_confirmation(:password, message: "does not match password")
+    |> validate_password([{:hash_password, Keyword.get(opts, :hash_password, true)} | opts])
+  end
+
+  @doc """
   A user changeset for registering or changing the email.
 
   It requires the email to change otherwise an error is added.

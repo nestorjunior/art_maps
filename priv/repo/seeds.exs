@@ -12,7 +12,31 @@ Repo.delete_all(Artist)
 
 # Criar usuário admin (se não existir)
 admin_email = "admin@artmaps.com"
-unless Accounts.get_user_by_email(admin_email) do
+admin_user = Accounts.get_user_by_email(admin_email)
+
+if admin_user do
+  # Se já existe, atualizar para garantir que está correto
+  {:ok, admin} = Accounts.register_user(%{
+    email: "admin_new@artmaps.com",
+    password: "admin123456789"
+  })
+
+  # Deletar o admin antigo
+  Repo.delete!(admin_user)
+
+  # Renomear o novo
+  admin
+  |> Ecto.Changeset.change(%{
+    email: admin_email,
+    approved: true,
+    role: "admin",
+    full_name: "Administrador"
+  })
+  |> Repo.update!()
+
+  IO.puts("✅ Admin atualizado: #{admin_email} / senha: admin123456789")
+else
+  # Criar novo admin
   {:ok, admin} =
     Accounts.register_user(%{
       email: admin_email,

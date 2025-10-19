@@ -114,6 +114,19 @@ defmodule ArtMaps.Accounts do
   ## User registration
 
   @doc """
+  Returns an `%Ecto.Changeset{}` for tracking user changes.
+
+  ## Examples
+
+      iex> change_user_registration(user)
+      %Ecto.Changeset{data: %User{}}
+
+  """
+  def change_user_registration(%User{} = user, attrs \\ %{}) do
+    User.registration_changeset(user, attrs, hash_password: false, validate_email: false)
+  end
+
+  @doc """
   Registers a user.
 
   ## Examples
@@ -126,9 +139,20 @@ defmodule ArtMaps.Accounts do
 
   """
   def register_user(attrs) do
-    %User{}
-    |> User.email_changeset(attrs)
-    |> Repo.insert()
+    changeset =
+      %User{}
+      |> User.email_changeset(attrs)
+      |> User.password_changeset(attrs)
+
+    # Em desenvolvimento, confirmar automaticamente
+    changeset =
+      if Mix.env() == :dev do
+        Ecto.Changeset.change(changeset, confirmed_at: DateTime.utc_now(:second))
+      else
+        changeset
+      end
+
+    Repo.insert(changeset)
   end
 
   ## Settings
